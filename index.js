@@ -10,12 +10,14 @@ app.set('view engine', 'ejs');
 
     var nome = req.params.nome;
     var lang = req.params.lang;
+    var exibirMsg = false;
 
     res.render("index", {
         nome: nome,
         lang: lang,
         empresa: "MS Produções",
-        funcionarios:60
+        funcionarios:60,
+        msg:exibirMsg
     });
  });
 
