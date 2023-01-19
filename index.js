@@ -5,9 +5,18 @@ const app = express();
 //Estou dizendopara o Express usar o EJS como View Engine - Motor de visualização
 app.set('view engine', 'ejs');
 
-//criação da rota de teste
- app.get("/", (req, res)=>{
-    res.render("principal/perfil");
+//criação da rota com dois parâmetros 
+ app.get("/:nome/:lang", (req, res)=>{
+
+    var nome = req.params.nome;
+    var lang = req.params.lang;
+
+    res.render("index", {
+        nome: nome,
+        lang: lang,
+        empresa: "MS Produções",
+        funcionarios:60
+    });
  });
 
 // Start da aplicação
