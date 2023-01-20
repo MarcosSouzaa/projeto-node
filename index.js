@@ -5,8 +5,11 @@ const app = express();
 //Estou dizendopara o Express usar o EJS como View Engine - Motor de visualização
 app.set('view engine', 'ejs');
 
+//Vou criar acesso para arquivos estáticos
+app.use(express.static('public'));
+
 //criação da rota com dois parâmetros 
- app.get("/:nome/:lang", (req, res)=>{
+app.get("/:nome/:lang", (req, res) => {
 
     var nome = req.params.nome;
     var lang = req.params.lang;
@@ -14,33 +17,32 @@ app.set('view engine', 'ejs');
 
     //utilizando forEach
     var produtos = [
-        {nome:"Doritos", preco: 3.14},
-        {nome:"Coca-Cola", preco: 10.00},
-        {nome:"Leite", preco: 6.25},
-        {nome:"Macarrão", preco: 7.25},
-        {nome:"Feijão", preco: 10.32},
-        {nome:"Arroz", preco: 7.20},
-        {nome:"Farinha", preco: 3.38}
+        { nome: "Doritos", preco: 3.14 },
+        { nome: "Coca-Cola", preco: 10.00 },
+        { nome: "Leite", preco: 6.25 },
+        { nome: "Macarrão", preco: 7.25 },
+        { nome: "Feijão", preco: 10.32 },
+        { nome: "Arroz", preco: 7.20 },
+        { nome: "Farinha", preco: 3.38 }
     ]
 
     res.render("index", {
         nome: nome,
         lang: lang,
         empresa: "MS Produções",
-        funcionarios:60,
-        msg:exibirMsg,
-        produtos:produtos
+        funcionarios: 60,
+        msg: exibirMsg,
+        produtos: produtos
     });
- });
+});
 
 // Start da aplicação
- app.listen(8080, (erro)=>{
+app.listen(8080, (erro) => {
 
-    if(erro){
+    if (erro) {
         console.log("Ops! Algo deu errado!")
-    }else{
+    } else {
         console.log("Aplicativo em funcionamento!");
     }
- });
+});
 
- 
