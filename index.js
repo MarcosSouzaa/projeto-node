@@ -27,9 +27,13 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-//criação da rota 
+//Rota página principal
 app.get("/", (req, res) => {
-    res.render("index");
+    Pergunta.findAll({ raw: true}).then (perguntas => { 
+        res.render("index",{
+            perguntas: perguntas
+        });
+    })    
 });
 
 //rota para página perguntar
@@ -44,7 +48,7 @@ app.post("/salvarpergunta", (req, res) => {
     var descricao = req.body.descricao;
     Pergunta.create({
         titulo:titulo,
-        descricao:descricao
+        descricao:descricao  
     }).then(() => {
          res.redirect("/");
     });
