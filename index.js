@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const connection = require("./database/database");
+const Pergunta = require("./database/Pergunta");
 
 //Database
 
@@ -37,10 +38,16 @@ app.get("/perguntar", (req, res) => {
 });
 
 //Criando rota para o Formulário methodo= POST Página perguntar.Body-parse disponibiliza o objeto body aqui.
+//enviando para o Banco de Dados
 app.post("/salvarpergunta", (req, res) => {
     var titulo = req.body.titulo;
     var descricao = req.body.descricao;
-    res.send("Formulário recebido! titulo " + titulo + " " + " descricao " + descricao);
+    Pergunta.create({
+        titulo:titulo,
+        descricao:descricao
+    }).then(() => {
+         res.redirect("/");
+    });
 });
 
 // Start da aplicação
