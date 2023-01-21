@@ -1,27 +1,40 @@
-//importação do express
+//importação das Bibliotecas
 const express = require("express");
 const app = express();
+const bodyParser = require("body-parser");
 
-//Estou dizendopara o Express usar o EJS como View Engine - Motor de visualização
+//Estou dizendo para o Express usar o EJS como View Engine - Motor de visualização
 app.set('view engine', 'ejs');
 
 //Vou criar acesso para arquivos estáticos
 app.use(express.static('public'));
 
+//Body parser para pegar dados do formulario
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
+
 //criação da rota 
 app.get("/", (req, res) => {
-    res.render("index")
+    res.render("index");
 });
 
-app.get("/perguntar", (req, res) =>{
+//rota para página perguntar
+app.get("/perguntar", (req, res) => {    
     res.render("perguntar");
+});
+
+//Criando rota para o Formulário methodo= POST Página perguntar.Body-parse disponibiliza o objeto body aqui.
+app.post("/salvarpergunta", (req, res) => {
+    var titulo = req.body.titulo;
+    var descricao = req.body.descricao;
+    res.send("Formulário recebido! titulo " + titulo + " " + " descricao " + descricao);
 });
 
 // Start da aplicação
 app.listen(8080, (erro) => {
 
     if (erro) {
-        console.log("Ops! Algo deu errado!")
+        console.log("Ops! Algo deu errado!");
     } else {
         console.log("Aplicativo em funcionamento!");
     }
