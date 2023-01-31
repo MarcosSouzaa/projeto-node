@@ -3,10 +3,9 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const connection = require("./database/database");
-const Pergunta = require("./database/Pergunta");
+const Resposta = require("./database/Resposta");
 
 //Database
-
 connection
      .authenticate()
      .then(() => {
@@ -14,8 +13,7 @@ connection
      })
      .catch((msgErro) => {
         console.log(msgErro);
-     })
-    
+     })    
 
 //Estou dizendo para o Express usar o EJS como View Engine - Motor de visualização
 app.set('view engine', 'ejs');
@@ -29,7 +27,9 @@ app.use(bodyParser.json());
 
 //Rota página principal
 app.get("/", (req, res) => {
-    Pergunta.findAll({ raw: true}).then (perguntas => { 
+    Pergunta.findAll({ raw: true, order:[
+        ['id','DESC'] //DESC = Decrescente
+    ]}).then (perguntas => { 
         res.render("index",{
             perguntas: perguntas
         });
@@ -54,6 +54,22 @@ app.post("/salvarpergunta", (req, res) => {
     });
 });
 
+//Buscar no db por id através do método sequilize findOne usando o modal Pergunta
+app.get("/pergunta/:id", (req, res) => {
+    var id = req.params.id;
+    Pergunta.findOne({
+        where: {id: id}
+    }).then(pergunta =>{
+        if(pergunta != undefined){ //Pergunta encontrada
+            res.render("pergunta",{
+                pergunta: pergunta //variável pergunta a ser usada na pg pergunta
+            });
+
+        }else{
+            res.redirect("/");
+        }
+    })
+});
 // Start da aplicação
 app.listen(8080, (erro) => {
 
