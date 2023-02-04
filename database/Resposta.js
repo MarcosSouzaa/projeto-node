@@ -3,12 +3,12 @@ const Sequelize = require("sequelize");
 //importando a conexão com banco
 const connection = require("./database");
 
-const Resposta = connection.define("resposta", {
+const Resposta = connection.define("respostas", {
     corpo: {
         type: Sequelize.TEXT,
         allowNull: false
     },
-    perguntasId: {
+    perguntaId: {
         type: Sequelize.INTEGER,
         allowNull: false
     }
@@ -17,4 +17,4 @@ const Resposta = connection.define("resposta", {
 Resposta.sync({force:false});
 
 // Para usar esse model fora desse arquivo
-module.exports = Resposta; 
+module.exports = Resposta;

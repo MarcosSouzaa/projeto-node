@@ -2,7 +2,7 @@
 const Sequelize = require("sequelize");
 //importando a conexão com banco
 const connection = require("./database");
- 
+
 //Criando a TABELA
 const Pergunta = connection.define('perguntas',{
     titulo:{
